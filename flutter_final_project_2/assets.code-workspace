@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "assets",
+			"path": "../flutter_final_project/assets"
+		},
+		{
+			"name": "flutter_final_project_2",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
