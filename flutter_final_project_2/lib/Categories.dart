@@ -6,6 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'ApiManger.dart';
 import 'MyClasses.dart';
+import 'database.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -82,8 +83,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
               color: Color.fromARGB(255, 255, 215, 0),
               size: 40,
             ),
-            onTap: () {
-              print("Go to Favorits");
+            onTap: () async {
+              List<Movie> list = await DatabaseManger.GetFavorits();
+                    Navigator.pushNamed(context, "/Favorits",
+                        arguments: {'Movies': list});
             },
           ),
         )
