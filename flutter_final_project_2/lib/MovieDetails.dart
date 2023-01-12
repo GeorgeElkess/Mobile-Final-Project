@@ -10,13 +10,7 @@ import 'database.dart';
 import 'MyClasses.dart';
 
 TextStyle StyTxt(var rate) {
-  if (rate) {
-    return TextStyle(
-      fontFamily: 'Poppins',
-      color: Color.fromARGB(255, 167, 177, 184),
-      fontSize: 16,
-    );
-  }
+  
   return TextStyle(
     fontFamily: 'Poppins',
     color: Color.fromARGB(255, 167, 177, 184),
@@ -24,18 +18,6 @@ TextStyle StyTxt(var rate) {
   );
 }
 
-void checkNull(m, img, y, x) {
-  if (m!.image != null) {
-    img = m!.image!.URL;
-  } else {
-    img =
-        "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930";
-  }
-
-  x = x + 1;
-}
-
-Future<void> flagFav() async {}
 
 class MovieDetailsPage extends StatefulWidget {
   MovieDetailsPage({super.key});
