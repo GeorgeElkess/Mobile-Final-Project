@@ -36,7 +36,7 @@ class DatabaseManger {
   }
 
   static Future<bool> InFavorits(String MovieId) async {
-    return await DatabaseManger._CheckUniqe("UserFavorits", MovieId);
+    return !await DatabaseManger._CheckUniqe("UserFavorits", MovieId);
   }
 
   static Future<bool> AddFavorits(String MovieId) async {
