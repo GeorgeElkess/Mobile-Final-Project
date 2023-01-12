@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final_project_2/favourites.dart';
 import 'package:flutter_final_project_2/firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart'
     show FlutterNativeSplash;
@@ -46,7 +47,8 @@ Future<void> main() async {
         '/Regester': (context) => const Regester(),
         '/HomePage': (context) => HomePage(Movies: Result),
         '/Categories': (context) => const CategoriesPage(),
-        '/MovieDetailsPage':(context) => MovieDetailsPage()
+        '/MovieDetailsPage':(context) => MovieDetailsPage(), 
+        '/Favorits':(context) => const FavoritsPage()
       },
       theme: ThemeData(
           primarySwatch: Colors.blueGrey,

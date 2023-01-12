@@ -129,7 +129,8 @@ class DatabaseManger {
         Total += Rating;
         counter++;
       }
-      return (Total / counter);
+      if (counter > 0) return (Total / counter);
+      return 0;
     } catch (e) {
       return 0;
     }
@@ -146,7 +147,9 @@ class DatabaseManger {
       for (var element in AllMovies.docs) {
         var Data = element.data();
         var MovieId = Data['MovieId'];
-        Movies.add(await APIManger.GetById(MovieId));
+        Movie e = await APIManger.GetById(MovieId);
+        e.AvarageRating = await DatabaseManger.GetAvarageRating(MovieId);
+        Movies.add(e);
       }
       return Movies;
     } catch (e) {

@@ -53,12 +53,13 @@ class Movie {
   MovieType type = MovieType.isMovie;
   String name = "";
   DateTime? releaseDate;
+  double AvarageRating = 0;
   Movie(String id,
       {PrimaryImage? image,
       isSeries = false,
       isEpisode = false,
       String name = "",
-      DateTime? releaseDate}) {
+      DateTime? releaseDate, this.AvarageRating=0}) {
     this.id = id;
     this.image = image;
     if (isSeries) {

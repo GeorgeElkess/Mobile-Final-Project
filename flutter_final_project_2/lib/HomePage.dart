@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       var Movie = Movies[i];
       if (Movie.ImageIsSet) {
         _MoviesWithImages.add(Movie);
+        print(Movie.id);
       }
     }
     for (int i = 0; i < Movies.length && _MoviesWithImages.length < 6; i++) {
@@ -62,7 +63,16 @@ class _HomePageState extends State<HomePage> {
                       const Icon(Icons.logout, color: Colors.white, size: 40)),
               GestureDetector(
                 onTap: () async {
-                  print(await DatabaseManger.GetAvarageRating("tt25467838"));
+                  print(await DatabaseManger.AddFavorits("tt21992412"));
+                  print(await DatabaseManger.AddFavorits("tt23837088"));
+                  print(await DatabaseManger.AddFavorits("tt23740206"));
+                  print(await DatabaseManger.AddFavorits("tt23214864"));
+                  print(await DatabaseManger.AddFavorits("tt25923952"));
+                  print(await DatabaseManger.AddFavorits("tt25574520"));
+                  //print(await DatabaseManger.AddFavorits("tt21992412"));
+                  //print(await DatabaseManger.AddFavorits("tt21992412"));
+                  //print(await DatabaseManger.AddFavorits("tt21992412"));
+                  //print(await DatabaseManger.AddFavorits("tt21992412"));
                 },
                 child: const Icon(
                   Icons.home,
@@ -78,8 +88,10 @@ class _HomePageState extends State<HomePage> {
                     color: Color.fromARGB(255, 255, 215, 0),
                     size: 40,
                   ),
-                  onTap: () {
-                    print("Go to Favorits");
+                  onTap: () async {
+                    List<Movie> list = await DatabaseManger.GetFavorits();
+                    Navigator.pushNamed(context, "/Favorits",
+                        arguments: {'Movies': list});
                   },
                 ),
               )
