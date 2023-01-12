@@ -78,7 +78,7 @@ class _FavoritsPageState extends State<FavoritsPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  //alignment: const AlignmentDirectional(-0.65, -0.65),
+                  alignment: const AlignmentDirectional(-0.65, -0.65),
                   child: ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -86,152 +86,121 @@ class _FavoritsPageState extends State<FavoritsPage> {
                     children: F!.length == 0
                         ? NoMovies()
                         : F!
-                            .map((e) => Align(
-                                  //alignment:
-                                    //  const AlignmentDirectional(0.55, 1),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                       10, 0, 10, 10),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(context, "/MovieDetailsPage",arguments: {'Movie':e});
-                                      },
-                                      child: Card(
-                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                        color: const Color.fromRGBO(
-                                            87, 99, 108, 100),
-                                        elevation: 10,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Align(
-                                          alignment:
-                                              const AlignmentDirectional(0, -0.8),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    2, 0, 2, 0),
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional
-                                                     .fromSTEB(0, 5, 0, 5),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(8),
-                                                      child: e.ImageIsSet
-                                                          ? Image.network(
-                                                              e.image!.URL,
-                                                              width: 100,
-                                                              height: 100,
-                                                              fit: BoxFit.fill,
-                                                            )
-                                                          : Image.asset(
-                                                              'assets/pngegg_(3).png',
-                                                              width: 100,
-                                                              height: 100,
-                                                              fit: BoxFit.fill,
-                                                            ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional
-                                                        .fromSTEB(5, 0, 0, 0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.start,
-                                                      children: [
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0, -0.65),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(10,
-                                                                        0, 0, 0),
-                                                            child: Text(
-                                                              e.name,
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                color: const Color
-                                                                        .fromRGBO(
-                                                                    255,
-                                                                    255,
-                                                                    255,
-                                                                    100),
-                                                                fontSize: 16,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  -0.35, 0),
-                                                          child:
-                                                              RatingBarIndicator(
-                                                            itemBuilder: (BuildContext
-                                                                        context,
-                                                                    int index) =>
-                                                                const Icon(
-                                                                    Icons
-                                                                        .star_rounded,
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            57,
-                                                                            210,
-                                                                            192,
-                                                                            100)),
-                                                            direction:
-                                                                Axis.horizontal,
-                                                            rating:
-                                                                e.AvarageRating,
-                                                            unratedColor:
-                                                                const Color(
-                                                                    0xFF9E9E9E),
-                                                            itemCount: 5,
-                                                            itemSize: 20,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.15, 0.1),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16, 0, 0, 0),
-                                                      child: Text(
-                                                        e.type.value,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Poppins',
-                                                            color: const Color
-                                                                    .fromRGBO(255,
-                                                                255, 255, 100)),
+                            .map((e) => Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 10, 10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, "/MovieDetailsPage",
+                                          arguments: {'Movie': e});
+                                    },
+                                    child: Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: const Color.fromRGBO(
+                                          87, 99, 108, 100),
+                                      elevation: 10,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(2, 0, 2, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(5, 10, 5, 10),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: e.ImageIsSet
+                                                    ? Image.network(
+                                                        e.image!.URL,
+                                                        width: 100,
+                                                        height: 100,
+                                                        fit: BoxFit.fill,
+                                                      )
+                                                    : Image.asset(
+                                                        'assets/pngegg_(3).png',
+                                                        width: 100,
+                                                        height: 100,
+                                                        fit: BoxFit.fill,
                                                       ),
-                                                    ),
-                                                  ),
-                                                ],
                                               ),
                                             ),
-                                          ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(5, 0, 0, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      e.name,
+                                                      style: const TextStyle(
+                                                        fontFamily: 'Poppins',
+                                                        color: Color.fromRGBO(
+                                                            255, 255, 255, 100),
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      child: RatingBarIndicator(
+                                                        itemBuilder: (BuildContext
+                                                                    context,
+                                                                int index) =>
+                                                            const Icon(
+                                                                Icons
+                                                                    .star_rounded,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        57,
+                                                                        210,
+                                                                        192,
+                                                                        100)),
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        rating: e.AvarageRating,
+                                                        unratedColor:
+                                                            const Color(
+                                                                0xFF9E9E9E),
+                                                        itemCount: 5,
+                                                        itemSize: 20,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 0, 5, 0),
+                                                child: Text(
+                                                  e.type.value,
+                                                  textAlign: TextAlign.start,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Poppins',
+                                                      color: Color.fromRGBO(
+                                                          255, 255, 255, 100)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -250,7 +219,18 @@ class _FavoritsPageState extends State<FavoritsPage> {
 
   List<Widget> NoMovies() {
     return [
-      Text("No Movies"),
+      Center(
+        child: const Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(5, 270, 5, 50),
+          child: Text(
+            "No Movies are currently added to your favourites",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                color: Color.fromRGBO(255, 255, 255, 100)),
+          ),
+        ),
+      ),
     ];
   }
 }
