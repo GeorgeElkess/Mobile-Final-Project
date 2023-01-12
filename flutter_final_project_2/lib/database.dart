@@ -148,7 +148,6 @@ class DatabaseManger {
         var Data = element.data();
         var MovieId = Data['MovieId'];
         Movie e = await APIManger.GetById(MovieId);
-        e.AvarageRating = await DatabaseManger.GetAvarageRating(MovieId);
         Movies.add(e);
       }
       return Movies;

@@ -60,8 +60,8 @@ class _RegesterState extends State<Regester> {
                             fit: BoxFit.contain,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
                             child: TextInput(
                               PlaceHolder: "Email",
                               TextControler: _emailController,
@@ -69,16 +69,16 @@ class _RegesterState extends State<Regester> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
                             child: TextInput(
                                 PlaceHolder: "Password",
                                 TextControler: _passwordController,
                                 InputType: TextInputType.visiblePassword),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
                             child: TextInput(
                               PlaceHolder: "Confirm Password",
                               TextControler: _confirmPasswordController,
@@ -86,24 +86,40 @@ class _RegesterState extends State<Regester> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
                             child: MyButton(
                               Lable: "Create Account",
                               OnClick: () {
-                                if (_passwordController.text.trim() !=
+                                if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(_emailController.text.trim())) {
+                                  setState(() {
+                                    errorString =
+                                        "Email must be in an email format";
+                                  });
+                                } else if (_passwordController.text.trim() !=
                                     _confirmPasswordController.text.trim()) {
                                   setState(() {
                                     errorString =
                                         "Password must be like Confirm Password";
                                   });
-                                }
-                                try {
-                                  SignUp();
-                                } on FirebaseAuthException catch (e) {
+                                } else if (_passwordController.text
+                                        .trim()
+                                        .length <
+                                    6) {
                                   setState(() {
-                                    errorString = "Invalid Input: ${e.code}";
+                                    errorString =
+                                        "Password must be Grater than 5 chracters";
                                   });
+                                } else {
+                                  try {
+                                    SignUp();
+                                  } on FirebaseAuthException catch (e) {
+                                    setState(() {
+                                      errorString = "Invalid Input: ${e.code}";
+                                    });
+                                  }
                                 }
                               },
                             ),
@@ -137,7 +153,8 @@ class _RegesterState extends State<Regester> {
                           Center(
                             child: Text(
                               errorString,
-                              style: const TextStyle(color: Colors.red, fontSize: 18),
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 18),
                             ),
                           )
                         ],

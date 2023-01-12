@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'ApiManger.dart';
@@ -29,6 +30,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         List<Movie> Temp =
             await APIManger.GetAll(Page: PageNumber, Search: Search);
         for (var element in Temp) {
+          print(element.AvarageRating);
           if (element.type == Type) {
             x.add(element);
           }
@@ -85,8 +87,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
             onTap: () async {
               List<Movie> list = await DatabaseManger.GetFavorits();
-                    Navigator.pushNamed(context, "/Favorits",
-                        arguments: {'Movies': list});
+              Navigator.pushNamed(context, "/Favorits",
+                  arguments: {'Movies': list});
             },
           ),
         )
@@ -126,8 +128,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   } else {
                     return Center(
                       child: LoadingAnimationWidget.flickr(
-                          leftDotColor:const Color.fromARGB(255, 0, 87, 215),
-                          rightDotColor:const Color.fromARGB(255, 254, 1, 120),
+                          leftDotColor: const Color.fromARGB(255, 0, 87, 215),
+                          rightDotColor: const Color.fromARGB(255, 254, 1, 120),
                           size: 30),
                     );
                   }
@@ -179,54 +181,74 @@ class _CategoriesPageState extends State<CategoriesPage> {
     }
     return Column(
       mainAxisSize: MainAxisSize.max,
-      children: Movies.map((e) => GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, "/MovieDetailsPage",
-                  arguments: {'Movie': e});
-            },
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 6, 20, 6),
-              child: Container(
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade800,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                          child: e.ImageIsSet
-                              ? Image.network(
-                                  e.image!.URL,
-                                  fit: BoxFit.contain,
-                                  height: 80,
-                                  width: 100,
-                                )
-                              : Image.asset(
-                                  "assets/pngegg_(3).png",
-                                  fit: BoxFit.contain,
-                                  height: 80,
-                                  width: 100,
-                                )),
-                      Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-                            child: Text(e.name,
-                                style: const TextStyle(color: Colors.white))),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                          child: Text(
-                            e.type.value,
-                            style: const TextStyle(color: Colors.white),
-                          ))
-                    ],
-                  )),
-            ),
-          )).toList(),
+      children: Movies.map((e) {
+        print(e.AvarageRating);
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "/MovieDetailsPage",
+                arguments: {'Movie': e});
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 6, 20, 6),
+            child: Container(
+                width: double.infinity,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade800,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        child: e.ImageIsSet
+                            ? Image.network(
+                                e.image!.URL,
+                                fit: BoxFit.contain,
+                                height: 80,
+                                width: 100,
+                              )
+                            : Image.asset(
+                                "assets/pngegg_(3).png",
+                                fit: BoxFit.contain,
+                                height: 80,
+                                width: 100,
+                              )),
+                    Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 10, 0, 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(e.name,
+                                  style: const TextStyle(color: Colors.white)),
+                              RatingBarIndicator(
+                                itemBuilder: (BuildContext context,
+                                        int index) =>
+                                    const Icon(Icons.star_rounded,
+                                        color:
+                                            Color.fromRGBO(57, 210, 192, 100)),
+                                direction: Axis.horizontal,
+                                rating: e.AvarageRating,
+                                unratedColor: const Color(0xFF9E9E9E),
+                                itemCount: 5,
+                                itemSize: 20,
+                              ),
+                            ],
+                          )),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                        child: Text(
+                          e.type.value,
+                          style: const TextStyle(color: Colors.white),
+                        ))
+                  ],
+                )),
+          ),
+        );
+      }).toList(),
     );
   }
 }

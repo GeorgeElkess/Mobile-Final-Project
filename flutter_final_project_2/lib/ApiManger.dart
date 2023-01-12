@@ -9,6 +9,8 @@ import 'dart:convert' show json, jsonDecode;
 
 import 'package:http/http.dart' as http;
 
+import 'database.dart';
+
 class PrimaryImage {
   String id = "";
   int width = 0;
@@ -59,7 +61,8 @@ class Movie {
       isSeries = false,
       isEpisode = false,
       String name = "",
-      DateTime? releaseDate, this.AvarageRating=0}) {
+      DateTime? releaseDate,
+      this.AvarageRating = 0}) {
     this.id = id;
     this.image = image;
     if (isSeries) {
@@ -151,7 +154,7 @@ class APIManger {
   }
 
   static Future<List<Movie>> GetAll(
-      {int Limit = 50,
+      {int Limit = 25,
       int Page = 1,
       DateSort Sort = DateSort.Descending,
       String Search = "",
@@ -177,6 +180,9 @@ class APIManger {
         });
     if (Result.statusCode != 200) return <Movie>[];
     var TheMovies = APIManger._FromJsonToObjectsList(Result.body);
+    for (var element in TheMovies) {
+      element.AvarageRating = await DatabaseManger.GetAvarageRating(element.id);
+    }
     return TheMovies;
   }
 
@@ -191,6 +197,7 @@ class APIManger {
         });
     if (Result.statusCode != 200) return Movie("Null");
     var TheMovies = APIManger._FromJsonToObject(Result.body);
+    TheMovies.AvarageRating = await DatabaseManger.GetAvarageRating(Id);
     return TheMovies;
   }
 }

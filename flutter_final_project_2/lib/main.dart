@@ -37,17 +37,16 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  List<Movie> Result = await APIManger.GetAll();
   FlutterNativeSplash.remove();
   runApp(MaterialApp(
       title: "Flutter Mobile",
       initialRoute: '/',
       routes: {
-        '/': (context) => Auth(Result: Result),
+        '/': (context) => Auth(),
         '/Regester': (context) => const Regester(),
-        '/HomePage': (context) => HomePage(Movies: Result),
+        '/HomePage': (context) => HomePage(),
         '/Categories': (context) => const CategoriesPage(),
-        '/MovieDetailsPage':(context) => MovieDetailsPage(), 
+        '/MovieDetailsPage':(context) => MovieDetailsPage(),
         '/Favorits':(context) => const FavoritsPage()
       },
       theme: ThemeData(

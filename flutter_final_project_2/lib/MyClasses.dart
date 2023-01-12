@@ -60,6 +60,7 @@ class TextInput extends StatelessWidget {
               ),
             ),
             keyboardType: InputType,
+            obscureText: InputType==TextInputType.visiblePassword?true:false,
           ),
         ),
       ),
