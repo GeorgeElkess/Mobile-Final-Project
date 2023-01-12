@@ -25,7 +25,6 @@ class _FavoritsPageState extends State<FavoritsPage> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     F = arguments['Movies'];
-    print(F!.length);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color.fromRGBO(16, 18, 19, 100),

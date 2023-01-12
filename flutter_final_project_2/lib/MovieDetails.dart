@@ -10,14 +10,12 @@ import 'database.dart';
 import 'MyClasses.dart';
 
 TextStyle StyTxt(var rate) {
-  
   return TextStyle(
     fontFamily: 'Poppins',
     color: Color.fromARGB(255, 167, 177, 184),
     fontSize: 16,
   );
 }
-
 
 class MovieDetailsPage extends StatefulWidget {
   MovieDetailsPage({super.key});
@@ -57,16 +55,12 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                 fav = Colors.red;
                 LFav = Icons.favorite;
               });
-
-              print("good1");
             } else {
               await DatabaseManger.DeleteFavorits(m!.id);
               setState(() {
                 fav = Colors.grey;
                 LFav = Icons.favorite_border;
               });
-
-              print("good2");
             }
           }
         },
@@ -78,7 +72,6 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
     return RatingBar.builder(
         onRatingUpdate: (value) async {
           await DatabaseManger.AddRating(m!.id, value);
-          print(userRat);
         },
         itemBuilder: (context, index) => Icon(
               Icons.star_rounded,
@@ -105,7 +98,6 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
     m = arguments['Movie'];
 
     getRate();
-    print(userRat);
 
     return MaterialApp(
         theme: ThemeData(
@@ -119,12 +111,12 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: Icon(
-                Icons.keyboard_backspace,
+                Icons.home,
                 color: cp,
                 size: 30,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, '/HomePage');
               },
             ),
             title: Column(
@@ -170,7 +162,7 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                             return FavCheck();
                           } else {
                             return IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.favorite_border,
                                 color: Colors.grey,
                                 size: 30,
@@ -283,7 +275,7 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                               return RateInt();
                             } else {
                               return RatingBar.builder(
-                                  onRatingUpdate: (value) async {
+                                  onRatingUpdate: (value) {
                                     print("wait!");
                                   },
                                   itemBuilder: (context, index) => Icon(

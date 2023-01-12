@@ -30,7 +30,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
         List<Movie> Temp =
             await APIManger.GetAll(Page: PageNumber, Search: Search);
         for (var element in Temp) {
-          print(element.AvarageRating);
           if (element.type == Type) {
             x.add(element);
           }
@@ -182,7 +181,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: Movies.map((e) {
-        print(e.AvarageRating);
         return GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, "/MovieDetailsPage",

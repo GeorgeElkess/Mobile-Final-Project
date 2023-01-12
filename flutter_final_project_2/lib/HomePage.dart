@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   int pageNumber = 1;
   Future<bool> GetData() async {
     Movies = await APIManger.GetAll(Page: pageNumber);
-    print(Movies.length);
     _MoviesWithImages = List<Movie>.empty(growable: true);
     for (int i = 0; i < Movies.length; i++) {
       var Movie = Movies[i];
@@ -411,7 +410,6 @@ class _HomePageState extends State<HomePage> {
     return Column(
         mainAxisSize: MainAxisSize.max,
         children: Movies.map((e) {
-          print(e.AvarageRating);
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, "/MovieDetailsPage",

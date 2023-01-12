@@ -34,7 +34,7 @@ class _RegesterState extends State<Regester> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text("Welcome to Mobile"),
+          title: const Text("Welcome to AGH Movies"),
           elevation: 0,
           // leading: const Icon(Icons.menu, color: Colors.deepPurpleAccent),
         ),

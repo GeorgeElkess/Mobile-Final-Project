@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Login"),
+        title: const Text("AGH Movies"),
         // leading: const Icon(Icons.menu, color: Colors.deepPurpleAccent),
       ),
       body: Container(
@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
                 fit: BoxFit.contain,
               ),
               Padding(
-                padding:const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                 child: TextInput(
                   PlaceHolder: "Email",
                   TextControler: _emailController,
