@@ -4,7 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'ApiManger.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'database.dart';
+import 'MyClasses.dart';
 
 TextStyle StyTxt(var rate) {
   if (rate) {
@@ -21,7 +24,6 @@ TextStyle StyTxt(var rate) {
   );
 }
 
-
 void checkNull(m, img, y, x) {
   if (m!.image != null) {
     img = m!.image!.URL;
@@ -33,6 +35,7 @@ void checkNull(m, img, y, x) {
   x = x + 1;
 }
 
+Future<void> flagFav() async {}
 
 class MovieDetailsPage extends StatefulWidget {
   MovieDetailsPage({super.key});
@@ -50,10 +53,67 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
 
   Color fav = Colors.grey;
 
-  var userFav = false;
-  double userRat = 3.5;
+  //var userFav = false;
+  double userRat = 0;
 
   IconData LFav = Icons.favorite_border;
+
+  Widget FavCheck() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 15, 15, 0),
+      child: IconButton(
+        icon: Icon(
+          LFav,
+          color: fav,
+          size: 30,
+        ),
+        onPressed: () async {
+          {
+            if (await DatabaseManger.InFavorits(m!.id) == false) {
+              await DatabaseManger.AddFavorits(m!.id);
+              setState(() {
+                fav = Colors.red;
+                LFav = Icons.favorite;
+              });
+
+              print("good1");
+            } else {
+              await DatabaseManger.DeleteFavorits(m!.id);
+              setState(() {
+                fav = Colors.grey;
+                LFav = Icons.favorite_border;
+              });
+
+              print("good2");
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  Widget RateInt() {
+    return RatingBar.builder(
+        onRatingUpdate: (value) async {
+          await DatabaseManger.AddRating(m!.id, value);
+          print(userRat);
+        },
+        itemBuilder: (context, index) => Icon(
+              Icons.star_rounded,
+              color: Colors.yellow,
+            ),
+        direction: Axis.horizontal,
+        initialRating: userRat,
+        allowHalfRating: true,
+        unratedColor: Color(0xFF9E9E9E),
+        itemCount: 5,
+        itemSize: 28,
+        glowColor: cp);
+  }
+
+  Future<void> getRate() async {
+    userRat = await DatabaseManger.GetUserRating(m!.id);
+  }
 
   // This widget is the root of your application.
   @override
@@ -61,13 +121,9 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     m = arguments['Movie'];
-    if (userFav == true) {
-      fav = Colors.red;
-      LFav = Icons.favorite;
-    } else {
-      fav = Colors.grey;
-      LFav = Icons.favorite_border;
-    }
+
+    getRate();
+    print(userRat);
 
     return MaterialApp(
         theme: ThemeData(
@@ -105,7 +161,6 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                 ),
               ],
             ),
-            actions: [],
             centerTitle: false,
             elevation: 4,
           ),
@@ -118,24 +173,31 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 15, 15, 0),
-                      child: IconButton(
-                        icon: Icon(
-                          LFav,
-                          color: fav,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (userFav == false) {
-                              userFav = true;
-                              //fav = Colors.red;
-                              //LFav = Icons.favorite;
+                      child: FutureBuilder(
+                        future: DatabaseManger.InFavorits(m!.id),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.data == false) {
+                              fav = Colors.grey;
+                              LFav = Icons.favorite_border;
                             } else {
-                              userFav = false;
-                              //fav = Colors.grey;
-                              //LFav = Icons.favorite_border;
+                              fav = Colors.red;
+                              LFav = Icons.favorite;
                             }
-                          });
+                            return FavCheck();
+                          } else {
+                            return IconButton(
+                              icon: Icon(
+                                Icons.favorite_border,
+                                color: Colors.grey,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                print("Wait");
+                              },
+                            );
+                          }
                         },
                       ),
                     ),
@@ -155,7 +217,7 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                               fit: BoxFit.contain,
                             )
                           : Image.asset(
-                              "images/pngegg_(3).png",
+                              "assets/pngegg_(3).png",
                               width: 193.8,
                               height: 270,
                               fit: BoxFit.contain,
@@ -205,7 +267,7 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(7, 0, 0, 0),
                         child: Text(
-                          'Movie',
+                          m!.type.value,
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             color: cp,
@@ -229,22 +291,33 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                           'Rating:',
                           style: StyTxt(true),
                         ),
-                        RatingBar.builder(
-                            onRatingUpdate: (value) {
-                              userRat = value;
-                              print(userRat);
-                            },
-                            itemBuilder: (context, index) => Icon(
-                                  Icons.star_rounded,
-                                  color: Colors.yellow,
-                                ),
-                            direction: Axis.horizontal,
-                            initialRating: userRat,
-                            allowHalfRating: true,
-                            unratedColor: Color(0xFF9E9E9E),
-                            itemCount: 5,
-                            itemSize: 28,
-                            glowColor: cp),
+                        FutureBuilder(
+                          future: DatabaseManger.GetUserRating(m!.id),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              userRat = snapshot.data!.toDouble();
+
+                              return RateInt();
+                            } else {
+                              return RatingBar.builder(
+                                  onRatingUpdate: (value) async {
+                                    print("wait!");
+                                  },
+                                  itemBuilder: (context, index) => Icon(
+                                        Icons.star_rounded,
+                                        color: Colors.yellow,
+                                      ),
+                                  direction: Axis.horizontal,
+                                  initialRating: userRat,
+                                  allowHalfRating: true,
+                                  unratedColor: Color(0xFF9E9E9E),
+                                  itemCount: 0,
+                                  itemSize: 28,
+                                  glowColor: cp);
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
