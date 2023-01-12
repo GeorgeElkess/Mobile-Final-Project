@@ -154,7 +154,7 @@ class APIManger {
   }
 
   static Future<List<Movie>> GetAll(
-      {int Limit = 25,
+      {int Limit = 10,
       int Page = 1,
       DateSort Sort = DateSort.Descending,
       String Search = "",

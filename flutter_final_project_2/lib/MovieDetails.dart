@@ -116,7 +116,8 @@ class _MovieDetailsPage extends State<MovieDetailsPage> {
                 size: 30,
               ),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/HomePage');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/HomePage', (Route<dynamic> route) => false);
               },
             ),
             title: Column(

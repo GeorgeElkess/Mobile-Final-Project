@@ -25,10 +25,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
     Type = arguments['Type'];
-    while (x.length < 20) {
+    while (x.length < 10) {
       try {
         List<Movie> Temp =
-            await APIManger.GetAll(Page: PageNumber, Search: Search);
+            await APIManger.GetAll(Page: PageNumber, Search: Search, Limit: 50);
         for (var element in Temp) {
           if (element.type == Type) {
             x.add(element);
